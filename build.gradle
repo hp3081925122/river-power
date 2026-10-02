@@ -27,6 +27,13 @@ base {
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
+sourceSets {
+    gametest {
+        compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+        runtimeClasspath += sourceSets.main.output + sourceSets.main.runtimeClasspath
+    }
+}
+
 minecraft {
     mappings channel: project.mapping_channel, version: project.mapping_version
     copyIdeResources = true
@@ -38,6 +45,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            args '--mixin', 'riverpower.mixins.json'
 
             mods {
                 "${project.mod_id}" {
@@ -47,6 +55,7 @@ minecraft {
         }
 
         client {
+            workingDirectory project.file(providers.gradleProperty('riverpowerClientRunDir').getOrElse('run'))
             property 'forge.enabledGameTestNamespaces', project.mod_id
         }
 
@@ -55,7 +64,13 @@ minecraft {
         }
 
         gameTestServer {
+            workingDirectory project.file('run-gametest')
             property 'forge.enabledGameTestNamespaces', project.mod_id
+            mods {
+                "${project.mod_id}" {
+                    source sourceSets.gametest
+                }
+            }
         }
 
         data {
@@ -109,7 +124,8 @@ tasks.named('jar', Jar).configure {
                 'Specification-Version': '1',
                 'Implementation-Title': project.name,
                 'Implementation-Version': project.jar.archiveVersion,
-                'Implementation-Vendor': project.mod_authors
+                'Implementation-Vendor': project.mod_authors,
+                'MixinConfigs': 'riverpower.mixins.json'
         ])
     }
     finalizedBy 'reobfJar'

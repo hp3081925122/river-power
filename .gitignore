@@ -24,6 +24,7 @@ run
 # Forge 模板自带的更新记录。
 forge*changelog.txt
 run-data
+run-gametest
 src/generated/resources/.cache
 mcmodsrepo
 *.log

@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.hp.riverpower.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "WaterWheelStructuralBlockMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
