@@ -15,6 +15,10 @@ public final class RiverPowerModels {
             ResourceLocation.fromNamespaceAndPath(RiverPower.MOD_ID, "block/brass_large_water_wheel/block"));
     private static final PartialModel BRASS_EXTENSION = PartialModel.of(
             ResourceLocation.fromNamespaceAndPath(RiverPower.MOD_ID, "block/brass_large_water_wheel/block_extension"));
+    private static final PartialModel STURDY_WHEEL = PartialModel.of(
+            ResourceLocation.fromNamespaceAndPath(RiverPower.MOD_ID, "block/sturdy_large_water_wheel/block"));
+    private static final PartialModel STURDY_EXTENSION = PartialModel.of(
+            ResourceLocation.fromNamespaceAndPath(RiverPower.MOD_ID, "block/sturdy_large_water_wheel/block_extension"));
 
     private RiverPowerModels() {
     }
@@ -28,5 +32,9 @@ public final class RiverPowerModels {
 
     public static PartialModel brassWheel(BlockState state) {
         return state.getValue(LargeWaterWheelBlock.EXTENSION) ? BRASS_EXTENSION : BRASS_WHEEL;
+    }
+
+    public static PartialModel sturdyWheel(BlockState state) {
+        return state.getValue(LargeWaterWheelBlock.EXTENSION) ? STURDY_EXTENSION : STURDY_WHEEL;
     }
 }

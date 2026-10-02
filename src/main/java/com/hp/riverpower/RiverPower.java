@@ -20,9 +20,10 @@ public final class RiverPower {
 
     public RiverPower(FMLJavaModLoadingContext context) {
         var modBus = context.getModEventBus();
+        RiverPowerConfig.register(context);
         REGISTRATE.registerEventListeners(modBus);
         RiverPowerContent.register(modBus);
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> RiverPowerModels::initialize);
-        LOGGER.info("River Power initialized: andesite 2x and brass 4x large water wheel stress capacity, 4 RPM.");
+        LOGGER.info("River Power initialized: andesite, brass and sturdy large water wheels, speed and stress are configurable.");
     }
 }

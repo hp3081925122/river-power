@@ -2,6 +2,7 @@ package com.hp.riverpower.mixin;
 
 import com.hp.riverpower.content.AndesiteLargeWaterWheelBlock;
 import com.hp.riverpower.content.BrassLargeWaterWheelBlock;
+import com.hp.riverpower.content.SturdyLargeWaterWheelBlock;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.kinetics.waterwheel.WaterWheelStructuralBlock;
 import net.minecraft.core.BlockPos;
@@ -24,7 +25,9 @@ public abstract class WaterWheelStructuralBlockMixin {
             return;
         }
         BlockState master = level.getBlockState(WaterWheelStructuralBlock.getMaster(level, pos, state));
-        if (master.getBlock() instanceof AndesiteLargeWaterWheelBlock || master.getBlock() instanceof BrassLargeWaterWheelBlock) {
+        if (master.getBlock() instanceof AndesiteLargeWaterWheelBlock
+                || master.getBlock() instanceof BrassLargeWaterWheelBlock
+                || master.getBlock() instanceof SturdyLargeWaterWheelBlock) {
             callback.setReturnValue(new ItemStack(master.getBlock()));
         }
     }
@@ -38,7 +41,9 @@ public abstract class WaterWheelStructuralBlockMixin {
         }
         BlockPos masterPos = WaterWheelStructuralBlock.getMaster(level, pos, state);
         BlockState master = level.getBlockState(masterPos);
-        if (master.getBlock() instanceof AndesiteLargeWaterWheelBlock || master.getBlock() instanceof BrassLargeWaterWheelBlock) {
+        if (master.getBlock() instanceof AndesiteLargeWaterWheelBlock
+                || master.getBlock() instanceof BrassLargeWaterWheelBlock
+                || master.getBlock() instanceof SturdyLargeWaterWheelBlock) {
             var wheel = master.getBlock();
             if (!level.getBlockTicks().hasScheduledTick(masterPos, wheel)) {
                 level.scheduleTick(masterPos, wheel, 1);

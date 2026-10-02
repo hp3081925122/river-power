@@ -8,8 +8,13 @@ import com.hp.riverpower.content.AndesiteLargeWaterWheelBlockItem;
 import com.hp.riverpower.content.BrassLargeWaterWheelBlock;
 import com.hp.riverpower.content.BrassLargeWaterWheelBlockEntity;
 import com.hp.riverpower.content.BrassLargeWaterWheelBlockItem;
+import com.hp.riverpower.content.SturdyLargeWaterWheelBlock;
+import com.hp.riverpower.content.SturdyLargeWaterWheelBlockEntity;
+import com.hp.riverpower.content.SturdyLargeWaterWheelBlockItem;
 import com.hp.riverpower.client.BrassWaterWheelRenderer;
 import com.hp.riverpower.client.BrassWaterWheelVisual;
+import com.hp.riverpower.client.SturdyWaterWheelRenderer;
+import com.hp.riverpower.client.SturdyWaterWheelVisual;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.api.stress.BlockStressValues;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
@@ -32,8 +37,9 @@ public final class RiverPowerContent {
                     .initialProperties(() -> Blocks.ANDESITE)
                     .properties(properties -> properties.noOcclusion().sound(SoundType.METAL).strength(3.0f))
                     .onRegister(block -> BlockStressValues.CAPACITIES.register(block,
-                            () -> BlockStressValues.getCapacity(AllBlocks.LARGE_WATER_WHEEL.get()) * 2))
-                    .onRegister(BlockStressValues.setGeneratorSpeed(4))
+                            () -> BlockStressValues.getCapacity(AllBlocks.LARGE_WATER_WHEEL.get())
+                                    * RiverPowerConfig.ANDESITE.stressMultiplier()))
+                    .onRegister(block -> BlockStressValues.RPM.registerProvider(RiverPowerConfig.ANDESITE.rpmProvider(block)))
                     .item(AndesiteLargeWaterWheelBlockItem::new)
                     .build()
                     .register();
@@ -50,8 +56,9 @@ public final class RiverPowerContent {
                     .initialProperties(() -> Blocks.ANDESITE)
                     .properties(properties -> properties.noOcclusion().sound(SoundType.METAL).strength(3.5f))
                     .onRegister(block -> BlockStressValues.CAPACITIES.register(block,
-                            () -> BlockStressValues.getCapacity(AllBlocks.LARGE_WATER_WHEEL.get()) * 4))
-                    .onRegister(BlockStressValues.setGeneratorSpeed(4))
+                            () -> BlockStressValues.getCapacity(AllBlocks.LARGE_WATER_WHEEL.get())
+                                    * RiverPowerConfig.BRASS.stressMultiplier()))
+                    .onRegister(block -> BlockStressValues.RPM.registerProvider(RiverPowerConfig.BRASS.rpmProvider(block)))
                     .item(BrassLargeWaterWheelBlockItem::new)
                     .build()
                     .register();
@@ -63,6 +70,25 @@ public final class RiverPowerContent {
                     .renderer(() -> BrassWaterWheelRenderer::new)
                     .register();
 
+    public static final BlockEntry<SturdyLargeWaterWheelBlock> STURDY_LARGE_WATER_WHEEL =
+            RiverPower.REGISTRATE.block("sturdy_large_water_wheel", SturdyLargeWaterWheelBlock::new)
+                    .initialProperties(() -> Blocks.ANDESITE)
+                    .properties(properties -> properties.noOcclusion().sound(SoundType.NETHERITE_BLOCK).strength(4.0f, 8.0f))
+                    .onRegister(block -> BlockStressValues.CAPACITIES.register(block,
+                            () -> BlockStressValues.getCapacity(AllBlocks.LARGE_WATER_WHEEL.get())
+                                    * RiverPowerConfig.STURDY.stressMultiplier()))
+                    .onRegister(block -> BlockStressValues.RPM.registerProvider(RiverPowerConfig.STURDY.rpmProvider(block)))
+                    .item(SturdyLargeWaterWheelBlockItem::new)
+                    .build()
+                    .register();
+
+    public static final BlockEntityEntry<SturdyLargeWaterWheelBlockEntity> STURDY_LARGE_WATER_WHEEL_ENTITY =
+            RiverPower.REGISTRATE.blockEntity("sturdy_large_water_wheel", SturdyLargeWaterWheelBlockEntity::new)
+                    .visual(() -> SturdyWaterWheelVisual::new, false)
+                    .validBlocks(STURDY_LARGE_WATER_WHEEL)
+                    .renderer(() -> SturdyWaterWheelRenderer::new)
+                    .register();
+
     public static final RegistryObject<CreativeModeTab> RIVER_POWER_TAB = TABS.register("main",
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.riverpower"))
@@ -70,6 +96,7 @@ public final class RiverPowerContent {
                     .displayItems((parameters, output) -> {
                         output.accept(ANDESITE_LARGE_WATER_WHEEL.get());
                         output.accept(BRASS_LARGE_WATER_WHEEL.get());
+                        output.accept(STURDY_LARGE_WATER_WHEEL.get());
                     })
                     .build());
 

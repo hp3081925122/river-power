@@ -1,7 +1,9 @@
 package com.hp.riverpower.content;
 
+import com.hp.riverpower.RiverPowerConfig;
 import com.simibubi.create.content.kinetics.waterwheel.LargeWaterWheelBlockEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -15,5 +17,10 @@ public final class BrassLargeWaterWheelBlockEntity extends LargeWaterWheelBlockE
     @Override
     public InteractionResult applyMaterialIfValid(ItemStack stack) {
         return InteractionResult.PASS;
+    }
+
+    @Override
+    public float getGeneratedSpeed() {
+        return Mth.clamp(flowScore, -1, 1) * RiverPowerConfig.BRASS.rpm();
     }
 }

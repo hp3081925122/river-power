@@ -3,5 +3,7 @@
   "itemGroup.riverpower": "River Power",
   "tooltip.riverpower.andesite_large_water_wheel": "2x large water wheel stress capacity · 4 RPM",
   "block.riverpower.brass_large_water_wheel": "Brass Large Water Wheel",
-  "tooltip.riverpower.brass_large_water_wheel": "4x large water wheel stress capacity · 4 RPM"
+  "tooltip.riverpower.brass_large_water_wheel": "3x large water wheel stress capacity · 4 RPM",
+  "block.riverpower.sturdy_large_water_wheel": "Sturdy Large Water Wheel",
+  "tooltip.riverpower.sturdy_large_water_wheel": "4x large water wheel stress capacity · 4 RPM"
 }

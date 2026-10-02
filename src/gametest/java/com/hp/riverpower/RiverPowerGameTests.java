@@ -2,6 +2,7 @@ package com.hp.riverpower;
 
 import com.hp.riverpower.content.AndesiteLargeWaterWheelBlockEntity;
 import com.hp.riverpower.content.BrassLargeWaterWheelBlockEntity;
+import com.hp.riverpower.content.SturdyLargeWaterWheelBlockEntity;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.api.stress.BlockStressValues;
@@ -37,10 +38,32 @@ public final class RiverPowerGameTests {
                     "Brass wheel must create its own block entity");
             float vanilla = (float) BlockStressValues.getCapacity(AllBlocks.LARGE_WATER_WHEEL.get());
             var wheel = (BrassLargeWaterWheelBlockEntity) helper.getBlockEntity(center);
-            helper.assertTrue(wheel.calculateAddedStressCapacity() == vanilla * 4,
-                    "Brass wheel must provide four times the configured vanilla capacity");
+            helper.assertTrue(wheel.calculateAddedStressCapacity() == vanilla * 3,
+                    "Brass wheel must provide three times the configured vanilla capacity");
             helper.assertTrue(helper.getBlockState(center.above()).is(AllBlocks.WATER_WHEEL_STRUCTURAL.get()),
                     "Brass wheel must reuse Create structural blocks");
+            helper.succeed();
+        });
+    }
+
+    @GameTest(template = "empty")
+    public static void sturdyWheelRegistration(GameTestHelper helper) {
+        BlockPos center = new BlockPos(4, 3, 4);
+        helper.setBlock(center, RiverPowerContent.STURDY_LARGE_WATER_WHEEL.getDefaultState()
+                .setValue(LargeWaterWheelBlock.AXIS, Direction.Axis.Z));
+        helper.runAfterDelay(4, () -> {
+            helper.assertTrue(helper.getBlockEntity(center) instanceof SturdyLargeWaterWheelBlockEntity,
+                    "Sturdy wheel must create its own block entity");
+            float vanilla = (float) BlockStressValues.getCapacity(AllBlocks.LARGE_WATER_WHEEL.get());
+            var wheel = (SturdyLargeWaterWheelBlockEntity) helper.getBlockEntity(center);
+            helper.assertTrue(wheel.calculateAddedStressCapacity() == vanilla * 4,
+                    "Sturdy wheel must provide four times the configured vanilla capacity");
+            BlockPos outer = center.above();
+            helper.assertBlockPresent(AllBlocks.WATER_WHEEL_STRUCTURAL.get(), outer);
+            var state = helper.getBlockState(outer);
+            ItemStack picked = state.getBlock().getCloneItemStack(helper.getLevel(), helper.absolutePos(outer), state);
+            helper.assertTrue(picked.is(RiverPowerContent.STURDY_LARGE_WATER_WHEEL.asItem()),
+                    "Picking the sturdy wheel rim must return the sturdy wheel");
             helper.succeed();
         });
     }
