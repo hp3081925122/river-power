@@ -1,5 +1,7 @@
 {
   "block.riverpower.andesite_large_water_wheel": "安山大水车",
   "itemGroup.riverpower": "河动力",
-  "tooltip.riverpower.andesite_large_water_wheel": "原版大水车 2 倍应力容量 · 4 RPM"
+  "tooltip.riverpower.andesite_large_water_wheel": "原版大水车 2 倍应力容量 · 4 RPM",
+  "block.riverpower.brass_large_water_wheel": "黄铜大水车",
+  "tooltip.riverpower.brass_large_water_wheel": "原版大水车 4 倍应力容量 · 4 RPM"
 }

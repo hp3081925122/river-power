@@ -23,6 +23,6 @@ public final class RiverPower {
         REGISTRATE.registerEventListeners(modBus);
         RiverPowerContent.register(modBus);
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> RiverPowerModels::initialize);
-        LOGGER.info("River Power initialized: andesite large water wheel, 2x stress capacity, 4 RPM.");
+        LOGGER.info("River Power initialized: andesite 2x and brass 4x large water wheel stress capacity, 4 RPM.");
     }
 }

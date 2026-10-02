@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "riverpower:andesite_large_water_wheel"
+    "riverpower:andesite_large_water_wheel",
+    "riverpower:brass_large_water_wheel"
   ]
 }

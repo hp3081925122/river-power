@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "BBB",
+    "BWB",
+    "BBB"
+  ],
+  "key": {
+    "B": {
+      "item": "create:brass_ingot"
+    },
+    "W": {
+      "item": "riverpower:andesite_large_water_wheel"
+    }
+  },
+  "result": {
+    "item": "riverpower:brass_large_water_wheel"
+  }
+}

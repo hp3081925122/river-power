@@ -1,5 +1,7 @@
 {
   "block.riverpower.andesite_large_water_wheel": "Andesite Large Water Wheel",
   "itemGroup.riverpower": "River Power",
-  "tooltip.riverpower.andesite_large_water_wheel": "2x large water wheel stress capacity · 4 RPM"
+  "tooltip.riverpower.andesite_large_water_wheel": "2x large water wheel stress capacity · 4 RPM",
+  "block.riverpower.brass_large_water_wheel": "Brass Large Water Wheel",
+  "tooltip.riverpower.brass_large_water_wheel": "4x large water wheel stress capacity · 4 RPM"
 }

@@ -1,6 +1,7 @@
 package com.hp.riverpower;
 
 import com.hp.riverpower.content.AndesiteLargeWaterWheelBlockEntity;
+import com.hp.riverpower.content.BrassLargeWaterWheelBlockEntity;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.api.stress.BlockStressValues;
@@ -26,6 +27,24 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
 @GameTestHolder(RiverPower.MOD_ID)
 @PrefixGameTestTemplate(false)
 public final class RiverPowerGameTests {
+    @GameTest(template = "empty")
+    public static void brassWheelRegistration(GameTestHelper helper) {
+        BlockPos center = new BlockPos(4, 3, 4);
+        helper.setBlock(center, RiverPowerContent.BRASS_LARGE_WATER_WHEEL.getDefaultState()
+                .setValue(LargeWaterWheelBlock.AXIS, Direction.Axis.Z));
+        helper.runAfterDelay(4, () -> {
+            helper.assertTrue(helper.getBlockEntity(center) instanceof BrassLargeWaterWheelBlockEntity,
+                    "Brass wheel must create its own block entity");
+            float vanilla = (float) BlockStressValues.getCapacity(AllBlocks.LARGE_WATER_WHEEL.get());
+            var wheel = (BrassLargeWaterWheelBlockEntity) helper.getBlockEntity(center);
+            helper.assertTrue(wheel.calculateAddedStressCapacity() == vanilla * 4,
+                    "Brass wheel must provide four times the configured vanilla capacity");
+            helper.assertTrue(helper.getBlockState(center.above()).is(AllBlocks.WATER_WHEEL_STRUCTURAL.get()),
+                    "Brass wheel must reuse Create structural blocks");
+            helper.succeed();
+        });
+    }
+
     @GameTest(template = "empty")
     public static void structurePickingAndDrops(GameTestHelper helper) {
         BlockPos center = new BlockPos(4, 3, 4);
