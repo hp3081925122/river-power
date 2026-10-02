@@ -1,0 +1,10 @@
+{
+  "parent": "create:block/large_water_wheel/textures",
+  "textures": {
+    "log": "riverpower:block/andesite_water_wheel_beam",
+    "planks": "riverpower:block/andesite_water_wheel_panel",
+    "log_top": "riverpower:block/andesite_water_wheel_hub",
+    "metal": "riverpower:block/andesite_water_wheel_metal",
+    "particle": "#planks"
+  }
+}

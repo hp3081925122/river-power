@@ -1,0 +1,3 @@
+River Power（河动力）
+
+本项目新增代码与自绘贴图保留所有权利。第三方依赖与参考素材按各自许可使用，参见 THIRD_PARTY_NOTICES.md 和 licenses 目录。
