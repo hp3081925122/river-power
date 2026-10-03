@@ -13,6 +13,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.level.GameType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
@@ -22,8 +23,8 @@ import net.minecraft.world.level.block.BubbleColumnBlock;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.gametest.GameTestHolder;
-import net.minecraftforge.gametest.PrefixGameTestTemplate;
+import net.neoforged.neoforge.gametest.GameTestHolder;
+import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 @GameTestHolder(RiverPower.MOD_ID)
 @PrefixGameTestTemplate(false)
@@ -136,7 +137,7 @@ public final class RiverPowerGameTests {
             var restored = new AndesiteLargeWaterWheelBlockEntity(RiverPowerContent.ANDESITE_LARGE_WATER_WHEEL_ENTITY.get(),
                     helper.absolutePos(center), helper.getBlockState(center));
             restored.setLevel(helper.getLevel());
-            restored.load(wheel.saveWithoutMetadata());
+            restored.loadWithComponents(wheel.saveWithoutMetadata(helper.getLevel().registryAccess()), helper.getLevel().registryAccess());
             helper.assertTrue(restored.flowScore == wheel.flowScore && restored.getGeneratedSpeed() == initialSpeed,
                     "Water flow state must survive block entity serialization");
             helper.setBlock(flow.below(), Blocks.MAGMA_BLOCK);
@@ -194,7 +195,7 @@ public final class RiverPowerGameTests {
     public static void itemPlacementAndExtension(GameTestHelper helper) {
         BlockPos center = new BlockPos(4, 3, 4);
         helper.setBlock(center, RiverPowerContent.ANDESITE_LARGE_WATER_WHEEL.getDefaultState());
-        var player = helper.makeMockSurvivalPlayer();
+        var player = helper.makeMockPlayer(GameType.SURVIVAL);
         var item = RiverPowerContent.ANDESITE_LARGE_WATER_WHEEL.asStack();
         BlockPos absolute = helper.absolutePos(center);
         var hit = new BlockHitResult(Vec3.atCenterOf(absolute).add(0, 0.5, 0), Direction.UP, absolute, false);
@@ -220,7 +221,7 @@ public final class RiverPowerGameTests {
         helper.setBlock(center, RiverPowerContent.ANDESITE_LARGE_WATER_WHEEL.getDefaultState()
                 .setValue(LargeWaterWheelBlock.AXIS, Direction.Axis.Z));
         helper.runAfterDelay(4, () -> {
-            var player = helper.makeMockSurvivalPlayer();
+            var player = helper.makeMockPlayer(GameType.SURVIVAL);
             var absolute = helper.absolutePos(corner);
             var context = new UseOnContext(helper.getLevel(), player, InteractionHand.MAIN_HAND,
                     AllItems.WRENCH.asStack(), new BlockHitResult(Vec3.atCenterOf(absolute), Direction.SOUTH, absolute, false));

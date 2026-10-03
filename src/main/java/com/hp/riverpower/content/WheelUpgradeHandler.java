@@ -15,12 +15,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 
-@Mod.EventBusSubscriber(modid = RiverPower.MOD_ID)
+@EventBusSubscriber(modid = RiverPower.MOD_ID)
 public final class WheelUpgradeHandler {
     private WheelUpgradeHandler() {
     }
@@ -41,8 +41,7 @@ public final class WheelUpgradeHandler {
         BlockPos masterPos;
         if (clicked.is(AllBlocks.LARGE_WATER_WHEEL.get())) {
             masterPos = pos;
-        } else if (clicked.is(AllBlocks.WATER_WHEEL_STRUCTURAL.get())
-                && AllBlocks.WATER_WHEEL_STRUCTURAL.get().stillValid(level, pos, clicked, false)) {
+        } else if (clicked.is(AllBlocks.WATER_WHEEL_STRUCTURAL.get())) {
             masterPos = WaterWheelStructuralBlock.getMaster(level, pos, clicked);
         } else {
             return;

@@ -24,9 +24,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 public final class RiverPowerContent {
     private static final DeferredRegister<CreativeModeTab> TABS =
@@ -89,7 +89,7 @@ public final class RiverPowerContent {
                     .renderer(() -> SturdyWaterWheelRenderer::new)
                     .register();
 
-    public static final RegistryObject<CreativeModeTab> RIVER_POWER_TAB = TABS.register("main",
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> RIVER_POWER_TAB = TABS.register("main",
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.riverpower"))
                     .icon(ANDESITE_LARGE_WATER_WHEEL::asStack)

@@ -1,15 +1,20 @@
-// 当前文件只保留最小的 Forge 开发、构建和运行配置。
+// 当前文件只保留最小的 NeoForge 开发、构建和运行配置。
 plugins {
+    id 'java-library'
     id 'eclipse'
     id 'idea'
     id 'maven-publish'
-    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+    id 'net.neoforged.gradle.userdev' version '7.1.37'
 }
 
+version = project.mod_version
+group = project.mod_group_id
+
 repositories {
+    mavenLocal()
+    maven { url = 'https://maven.neoforged.net/releases' }
     maven { url = 'https://maven.createmod.net' }
-    maven { url = 'https://maven.ithundxr.dev/mirror' }
-    maven { url = 'https://raw.githubusercontent.com/Fuzss/modresources/main/maven/' }
+    maven { url = 'https://maven.ithundxr.dev/snapshots' }
     maven {
         url = 'https://www.cursemaven.com'
         content {
@@ -18,14 +23,11 @@ repositories {
     }
 }
 
-version = project.mod_version
-group = project.mod_group_id
-
 base {
     archivesName = project.mod_id
 }
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 sourceSets {
     gametest {
@@ -34,72 +36,54 @@ sourceSets {
     }
 }
 
-minecraft {
-    mappings channel: project.mapping_channel, version: project.mapping_version
-    copyIdeResources = true
+runs {
+    configureEach {
+        systemProperty 'neoforge.logging.markers', 'REGISTRIES'
+        systemProperty 'neoforge.logging.console.level', 'debug'
+        modSource project.sourceSets.main
+    }
 
-    runs {
-        configureEach {
-            workingDirectory project.file('run')
-            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'debug'
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-            args '--mixin', 'riverpower.mixins.json'
+    client {
+        systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+    }
 
-            mods {
-                "${project.mod_id}" {
-                    source sourceSets.main
-                }
-            }
-        }
+    server {
+        systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+        programArgument '--nogui'
+    }
 
-        client {
-            workingDirectory project.file(providers.gradleProperty('riverpowerClientRunDir').getOrElse('run'))
-            property 'forge.enabledGameTestNamespaces', project.mod_id
-        }
+    gameTestServer {
+        systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+        modSource project.sourceSets.gametest
+    }
 
-        server {
-            args '--nogui'
-        }
-
-        gameTestServer {
-            workingDirectory project.file('run-gametest')
-            property 'forge.enabledGameTestNamespaces', project.mod_id
-            mods {
-                "${project.mod_id}" {
-                    source sourceSets.gametest
-                }
-            }
-        }
-
-        data {
-            workingDirectory project.file('run-data')
-            args '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
-        }
+    data {
+        programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
     }
 }
 
-sourceSets.main.resources { srcDir 'src/generated/resources' }
-
-dependencies {
-    minecraft "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"
-    implementation(fg.deobf("com.simibubi.create:create-${project.minecraft_version}:${project.create_version}:slim") { transitive = false })
-    implementation fg.deobf("net.createmod.ponder:Ponder-Forge-${project.minecraft_version}:${project.ponder_version}")
-    compileOnly fg.deobf("dev.engine-room.flywheel:flywheel-forge-api-${project.minecraft_version}:${project.flywheel_version}")
-    runtimeOnly fg.deobf("dev.engine-room.flywheel:flywheel-forge-${project.minecraft_version}:${project.flywheel_version}")
-    implementation fg.deobf("com.tterrag.registrate:Registrate:${project.registrate_version}")
-    compileOnly(annotationProcessor('io.github.llamalad7:mixinextras-common:0.4.1'))
-    implementation 'io.github.llamalad7:mixinextras-forge:0.4.1'
+sourceSets.main.resources {
+    srcDir 'src/generated/resources'
+    srcDir 'src/gametest/resources'
 }
 
-tasks.named('processResources', ProcessResources).configure {
-    filteringCharset = 'UTF-8'
+dependencies {
+    implementation "net.neoforged:neoforge:${project.neo_version}"
+    implementation("com.simibubi.create:create-${project.minecraft_version}:${project.create_version}") { transitive = false }
+    implementation "net.createmod.ponder:ponder-neoforge:${project.ponder_version}+mc${project.minecraft_version}"
+    compileOnly "dev.engine-room.flywheel:flywheel-neoforge-api-${project.minecraft_version}:${project.flywheel_version}"
+    runtimeOnly "dev.engine-room.flywheel:flywheel-neoforge-${project.minecraft_version}:${project.flywheel_version}"
+    implementation "com.tterrag.registrate:Registrate:${project.registrate_version}"
+    compileOnly annotationProcessor("io.github.llamalad7:mixinextras-common:${project.mixinextras_version}")
+    implementation "io.github.llamalad7:mixinextras-neoforge:${project.mixinextras_version}"
+}
+
+tasks.withType(ProcessResources).configureEach {
     def replaceProperties = [
             minecraft_version: project.minecraft_version,
             minecraft_version_range: project.minecraft_version_range,
-            forge_version: project.forge_version,
-            forge_version_range: project.forge_version_range,
+            neo_version: project.neo_version,
+            neo_version_range: project.neo_version_range,
             loader_version_range: project.loader_version_range,
             mod_id: project.mod_id,
             mod_name: project.mod_name,
@@ -111,39 +95,28 @@ tasks.named('processResources', ProcessResources).configure {
     ]
     inputs.properties replaceProperties
 
-    filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
-        expand replaceProperties + [project: project]
+    filesMatching(['META-INF/neoforge.mods.toml', 'pack.mcmeta']) {
+        expand replaceProperties
     }
-}
-
-tasks.named('jar', Jar).configure {
-    manifest {
-        attributes([
-                'Specification-Title': project.mod_id,
-                'Specification-Vendor': project.mod_authors,
-                'Specification-Version': '1',
-                'Implementation-Title': project.name,
-                'Implementation-Version': project.jar.archiveVersion,
-                'Implementation-Vendor': project.mod_authors,
-                'MixinConfigs': 'riverpower.mixins.json'
-        ])
-    }
-    finalizedBy 'reobfJar'
 }
 
 publishing {
     publications {
         register('mavenJava', MavenPublication) {
-            artifact jar
+            from components.java
         }
     }
     repositories {
         maven {
-            url "file://${project.projectDir}/mcmodsrepo"
+            url "file://${project.projectDir}/repo"
         }
     }
 }
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
+}
+
+tasks.named('jar').configure {
+    exclude 'data/riverpower/structure/empty.nbt'
 }

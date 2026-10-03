@@ -15,7 +15,7 @@ import java.util.function.Consumer;
 
 public final class SturdyWaterWheelVisual extends KineticBlockEntityVisual<SturdyLargeWaterWheelBlockEntity> {
     private static final RendererReloadCache<PartialModel, Model> MODELS =
-            new RendererReloadCache<>(partial -> BakedModelBuilder.create(partial.get()).build());
+            new RendererReloadCache<>(partial -> new BakedModelBuilder(partial.get()).build());
 
     private final RotatingInstance wheel;
 

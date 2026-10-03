@@ -1,37 +1,120 @@
-# Eclipse 配置与输出。
-bin
-*.launch
-.settings
-.metadata
-.classpath
-.project
+# User-specific stuff
+.idea/
 
-# IntelliJ IDEA 配置与输出。
-out
+*.iml
 *.ipr
 *.iws
-*.iml
-.idea
 
-# Gradle 缓存与构建输出。
-build
-.gradle
+# IntelliJ
+out/
+# mpeltonen/sbt-idea plugin
+.idea_modules/
 
-# 游戏运行与其他生成目录。
-eclipse
-run
+# JIRA plugin
+atlassian-ide-plugin.xml
 
-# Forge 模板自带的更新记录。
-forge*changelog.txt
-run-data
-run-gametest
-src/generated/resources/.cache
-mcmodsrepo
+# Compiled class file
+*.class
+
+# Log file
 *.log
 
-# 原版几何与轴贴图只作为本地建模参考，不纳入公开源码。
-modeling/andesite_large_water_wheel/*.bbmodel
-modeling/andesite_large_water_wheel/*.obj
-modeling/andesite_large_water_wheel/*.mtl
-modeling/andesite_large_water_wheel/textures/axis.png
-modeling/andesite_large_water_wheel/textures/axis_top.png
+# BlueJ files
+*.ctxt
+
+# Package Files #
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+*~
+
+# temporary files which can be created if a process still has a handle open of a deleted file
+.fuse_hidden*
+
+# KDE directory preferences
+.directory
+
+# Linux trash folder which might appear on any partition or disk
+.Trash-*
+
+# .nfs files are created when an open file is removed but is still being accessed
+.nfs*
+
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must end with two \r
+Icon
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Windows thumbnail cache files
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+
+# Dump file
+*.stackdump
+
+# Folder config file
+[Dd]esktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
+
+.gradle
+build/
+
+# Ignore Gradle GUI config
+gradle-app.setting
+
+# Cache of project
+.gradletasknamecache
+
+**/build/
+
+# Common working directory
+run/
+
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle-wrapper.jar
+runs/
+gradle/

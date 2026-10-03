@@ -3,9 +3,9 @@ package com.hp.riverpower;
 import com.simibubi.create.api.registry.SimpleRegistry;
 import com.simibubi.create.api.stress.BlockStressValues;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.ModContainer;
 
 public final class RiverPowerConfig {
     public static final WheelConfig ANDESITE = new WheelConfig("andesite_large_water_wheel", "安山大水车", "Andesite Large Water Wheel", 4, 2.0, "安山机壳", "Andesite Casing");
@@ -15,27 +15,27 @@ public final class RiverPowerConfig {
     private RiverPowerConfig() {
     }
 
-    public static void register(FMLJavaModLoadingContext context) {
+    public static void register(ModContainer container) {
         for (WheelConfig wheel : new WheelConfig[] {ANDESITE, BRASS, STURDY}) {
-            context.registerConfig(ModConfig.Type.COMMON, wheel.spec, "riverpower-" + wheel.name + ".toml");
+            container.registerConfig(ModConfig.Type.COMMON, wheel.spec, "riverpower-" + wheel.name + ".toml");
         }
     }
 
     public static final class WheelConfig {
         public final String name;
-        public final ForgeConfigSpec spec;
+        public final ModConfigSpec spec;
         private final int defaultRpm;
         private final double defaultMultiplier;
-        private final ForgeConfigSpec.IntValue rpm;
-        private final ForgeConfigSpec.DoubleValue stressMultiplier;
-        private final ForgeConfigSpec.BooleanValue upgradeEnabled;
+        private final ModConfigSpec.IntValue rpm;
+        private final ModConfigSpec.DoubleValue stressMultiplier;
+        private final ModConfigSpec.BooleanValue upgradeEnabled;
 
         private WheelConfig(String name, String nameZh, String nameEn, int defaultRpm, double defaultMultiplier,
                             String itemZh, String itemEn) {
             this.name = name;
             this.defaultRpm = defaultRpm;
             this.defaultMultiplier = defaultMultiplier;
-            ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
+            ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
             builder.comment(
                     nameZh + " 配置文件",
                     nameEn + " configuration").push("wheel");

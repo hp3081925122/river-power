@@ -1,13 +1,13 @@
 # River Power（河动力）
 
-Minecraft 1.20.1 Forge 的 Create 水车附属，当前提供安山大水车、黄铜大水车和坚固板大水车。
+Minecraft 1.21.1 NeoForge 的 Create 水车附属，当前提供安山大水车、黄铜大水车和坚固板大水车。
 
 - 模组 ID：`riverpower`
 - Java 包：`com.hp.riverpower`
 - Minecraft：1.20.1
-- Forge：47.4.23
-- Java：17
-- Create：开发坐标 `6.0.8-289`，运行时依赖范围为 `0.0.1` 及以上且不设上限。
+- NeoForge：21.1.233
+- Java：21
+- Create：开发坐标 `6.0.10-280`，运行时依赖范围为 `6.0.10` 至 `6.1.0`。
 - 模组版本：1.0.0
 
 ## 安山大水车
@@ -32,7 +32,7 @@ Minecraft 1.20.1 Forge 的 Create 水车附属，当前提供安山大水车、�
 
 游戏模型引用 Create 原版 OBJ，覆盖自绘材质；普通和串联模型分别接入 Flywheel 实例渲染与普通方块实体渲染，三款水车各自使用对应材质。
 
-Create 6.0.8 的外圈占位方块将选取物品和更新调度写死为原版大水车。本项目通过两个仅作用于本模组三款水车的 Mixin 修正，使外圈/角落的选取物品正确，并及时更新水流。Mixin 使用已核对的 1.20.1 官方映射名和生产环境 SRG 方法名，不需要额外 refmap。
+Create 6.0.10 的外圈占位方块将选取物品和更新调度写死为原版大水车。本项目通过两个仅作用于本模组三款水车的 Mixin 修正，使外圈/角落的选取物品正确，并及时更新水流。Mixin 使用已核对的 1.21.1 官方映射名和生产环境 SRG 方法名，不需要额外 refmap。
 
 ## 配置文件
 
@@ -68,10 +68,11 @@ GameTest 代码和结构位于独立的 `src/gametest`，只随 `runGameTestServ
 
 ## 资源许可与依赖
 
-Create 官方开发配置依据：<https://github.com/Creators-of-Create/wiki/blob/main/src/developers/depend-on-create/forge-1.20.1.md>。开发和测试使用 Create `6.0.8-289`；运行时依赖声明为 Create `0.0.1` 及以上且不设最高版本。Ponder 1.0.91、Flywheel 1.0.5、Registrate MC1.20-1.3.3、MixinExtras 0.4.1 与开发环境一致。
+Create 官方开发配置使用 1.21.1 NeoForge 组合：Create `6.0.10-280`、Ponder `1.0.82`、Flywheel `1.0.6`、Registrate `MC1.21-1.3.0+67`、MixinExtras `0.5.4`。
 
 原始 OBJ、MTL、轴贴图和转换的 Blockbench 工程仅保留本地参考，排除出 Git 和成品 JAR；运行时通过 Create 命名空间引用。详情见 `THIRD_PARTY_NOTICES.md`。
 
 ## 验证
 
 本次功能验证结果见 `docs/validation.md`。客户端成功加载与实际游戏内外观验证分别记录。
+
