@@ -96,5 +96,14 @@
         0.2
       ]
     }
+  },
+  "textures": {
+    "axis": "create:block/axis",
+    "axis_top": "create:block/axis_top",
+    "metal": "riverpower:block/brass_water_wheel_metal",
+    "log": "riverpower:block/brass_water_wheel_beam",
+    "planks": "riverpower:block/brass_water_wheel_panel",
+    "log_top": "riverpower:block/brass_water_wheel_hub",
+    "particle": "riverpower:block/brass_water_wheel_panel"
   }
 }

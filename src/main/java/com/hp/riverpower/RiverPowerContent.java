@@ -25,6 +25,7 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
@@ -93,17 +94,28 @@ public final class RiverPowerContent {
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.riverpower"))
                     .icon(ANDESITE_LARGE_WATER_WHEEL::asStack)
-                    .displayItems((parameters, output) -> {
-                        output.accept(ANDESITE_LARGE_WATER_WHEEL.get());
-                        output.accept(BRASS_LARGE_WATER_WHEEL.get());
-                        output.accept(STURDY_LARGE_WATER_WHEEL.get());
-                    })
                     .build());
 
     private RiverPowerContent() {
     }
 
     public static void register(IEventBus modBus) {
+        modBus.addListener(RiverPowerContent::buildTabContents);
         TABS.register(modBus);
+    }
+
+    private static void buildTabContents(BuildCreativeModeTabContentsEvent event) {
+        if (!event.getTabKey().equals(RIVER_POWER_TAB.getKey())) {
+            return;
+        }
+        if (event.getParentEntries().stream().noneMatch(stack -> stack.is(ANDESITE_LARGE_WATER_WHEEL.asItem()))) {
+            event.accept(ANDESITE_LARGE_WATER_WHEEL.get());
+        }
+        if (event.getParentEntries().stream().noneMatch(stack -> stack.is(BRASS_LARGE_WATER_WHEEL.asItem()))) {
+            event.accept(BRASS_LARGE_WATER_WHEEL.get());
+        }
+        if (event.getParentEntries().stream().noneMatch(stack -> stack.is(STURDY_LARGE_WATER_WHEEL.asItem()))) {
+            event.accept(STURDY_LARGE_WATER_WHEEL.get());
+        }
     }
 }

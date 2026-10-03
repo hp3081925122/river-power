@@ -13,7 +13,8 @@ import org.slf4j.Logger;
 public final class RiverPower {
     public static final String MOD_ID = "riverpower";
     public static final CreateRegistrate REGISTRATE = CreateRegistrate.create(MOD_ID)
-            .setTooltipModifierFactory(item -> TooltipModifier.mapNull(KineticStats.create(item)));
+            .setTooltipModifierFactory(item -> TooltipModifier.mapNull(KineticStats.create(item)))
+            .setCreativeTab(null);
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public RiverPower(IEventBus modBus, ModContainer modContainer) {

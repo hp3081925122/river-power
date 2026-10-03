@@ -2,5 +2,14 @@
   "parent": "riverpower:block/andesite_large_water_wheel/textures",
   "loader": "neoforge:obj",
   "flip_v": true,
-  "model": "create:models/block/large_water_wheel/waterwheel_large.obj"
+  "model": "create:models/block/large_water_wheel/waterwheel_large.obj",
+  "textures": {
+    "axis": "create:block/axis",
+    "axis_top": "create:block/axis_top",
+    "metal": "riverpower:block/andesite_water_wheel_metal",
+    "log": "riverpower:block/andesite_water_wheel_beam",
+    "planks": "riverpower:block/andesite_water_wheel_panel",
+    "log_top": "riverpower:block/andesite_water_wheel_hub",
+    "particle": "riverpower:block/andesite_water_wheel_panel"
+  }
 }
